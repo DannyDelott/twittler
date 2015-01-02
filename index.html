@@ -31,22 +31,6 @@
         <div class="message"></div>
       </div>
     </div>
-    
-  	<script>
 
-    	$(document).ready(function(){
-    		var $body = $('body');
-
-    		var index = streams.home.length - 1;
-    		while(index >= 0){
-      		var tweet = streams.home[index];
-      		var $tweet = $('<div></div>');
-      		$tweet.text('@' + tweet.user + ' (' + moment(tweet.created_at).startOf('hour').fromNow() + '): ' + tweet.message);
-      		$tweet.appendTo($body);
-      		index -= 1;
-    		}
-    	});
-
-  </script>
   </body>
 </html>
