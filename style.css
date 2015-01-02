@@ -74,6 +74,18 @@ h1 {
  transform: translateY(-50%);
 }
 
+
+/* Timeline */
+#timeline {
+  width:600px;
+  position:relative;
+  margin: 96px auto;
+  display:none;
+  z-index:2;
+}
+
+
+
 /* Post */
 
 .post {
@@ -107,3 +119,10 @@ h1 {
   opacity:1;
   font-size:16pt;
 }
+
+.white {
+  background:#fff;
+  color:#000;
+  margin-bottom:56px;
+}
+
