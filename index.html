@@ -1,46 +1,52 @@
-<!DOCTYPE html>
 <html>
   <head>
-    <title>Twittler</title>
+  	<title>Twittler</title>
 
-    <link href="style.css" rel="stylesheet" type="text/css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Roboto+Slab">
-    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Exo">
+  	<link href="style.css" rel="stylesheet" type="text/css" media="screen" />
+  	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Roboto+Slab">
+  	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Exo">
 
-    <script src="js/jquery.js"></script>
-    <script src="js/data_generator.js"></script>
-    <script src="js/moment.js"></script> 
-    <script src="js/underscore-min.js"></script> 
-    <script src="js/application.js"></script>
-    
+  	<script src="js/jquery.js"></script>
+  	<script src="js/data_generator.js"></script>
+  	<script src="js/moment.js"></script> 
+  	<script src="js/underscore-min.js"></script> 
+  	<script src="js/application.js"></script>
+  
   </head>
   <body>
   
-  <video autoplay loop poster="midnight-motion.jpg" id="bgvid">
-  	<source src="midnight-motion.webm" type="video/webm">
-    <source src="midnight-motion.mp4" type="video/mp4">
-  </video>
+  	<video autoplay loop poster="midnight-motion.jpg" id="bgvid">
+  		<source src="midnight-motion.webm" type="video/webm">
+  		<source src="midnight-motion.mp4" type="video/mp4">
+  	</video>
 
-  <div id="logo">
-    <h1><a href="#">Twittler</a></h1>
-  </div>
-  
-    <script>
+  	<div id="logo">
+  		<h1><a href="#">Twittler</a></h1>
+  	</div>
+  	
+    <div id="stream">
+      <div class="post">
+        <div class="author"><a href="#"></a></div>
+        <div class="timestamp"></div>
+        <div class="message"></div>
+      </div>
+    </div>
+    
+  	<script>
 
-      $(document).ready(function(){
-        var $body = $('body');
+    	$(document).ready(function(){
+    		var $body = $('body');
 
-        var index = streams.home.length - 1;
-        while(index >= 0){
-          var tweet = streams.home[index];
-          var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ' (' + moment(tweet.created_at).startOf('hour').fromNow() + '): ' + tweet.message);
-          $tweet.appendTo($body);
-          index -= 1;
-        }
+    		var index = streams.home.length - 1;
+    		while(index >= 0){
+      		var tweet = streams.home[index];
+      		var $tweet = $('<div></div>');
+      		$tweet.text('@' + tweet.user + ' (' + moment(tweet.created_at).startOf('hour').fromNow() + '): ' + tweet.message);
+      		$tweet.appendTo($body);
+      		index -= 1;
+    		}
+    	});
 
-      });
-
-    </script>
+  </script>
   </body>
 </html>

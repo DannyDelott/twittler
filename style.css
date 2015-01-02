@@ -58,3 +58,52 @@ h1 {
   background:#000;
   border-radius:inherit;
 }
+
+
+/* Stream */
+
+#stream {
+ width:600px;
+ margin: 0 auto;
+ position:relative;
+ z-index:2;
+ position: relative;
+ top: 50%;
+ -ms-transform: translateY(-50%)
+ -webkit-transform: translateY(-50%);
+ transform: translateY(-50%);
+}
+
+/* Post */
+
+.post {
+  padding:28px 28px 56px 28px;
+  background:#000;
+  opacity:.55;
+  font-size: 16pt;
+  color:#fff;
+  height:auto;
+  border-radius:10px;
+  z-index:2;
+}
+
+.author {
+  position:relative;
+  font-weight:bold;
+  font-size:12pt;
+  float:left;
+}
+
+.timestamp {
+  font-weight:thin;
+  font-size:12pt;
+  opacity:.35;  
+  float:right;
+}
+
+.message {
+  clear:both;
+  padding-top:35px;
+  opacity:1;
+  font-size:16pt;
+}
