@@ -1,5 +1,29 @@
+
+/* Links */
+
+a {
+  text-decoration: none;
+  color: #fff;
+  opacity:.55;
+}
+
+a:hover {
+  opacity:1;
+}
+
+/* Body */
+
+body {
+  font-family:'Roboto Slab', Geneva, sans-serif;
+  font-size:12px;
+  margin:46px 0 46px 0;
+  color:#FFF;
+}
+
+/* Background */
+
 video#bgvid {
-  position: fixed; 
+  position: fixed;
   right: 0; 
   bottom: 0;
   background-position: 50 0;
@@ -7,4 +31,30 @@ video#bgvid {
   width: auto; height: auto; z-index: 1;
   background: url(midnight-motion.jpg) no-repeat;
   background-size: cover;
+}
+
+
+/* Logo */
+
+#logo {
+ width:275px;
+ height:84px;
+ position:fixed;
+ left:0;
+ border-radius:0 10px 10px 0;
+ opacity:.55;
+ z-index:3;
+ top: 50%;
+ -ms-transform: translateY(-50%)
+ -webkit-transform: translateY(-50%);
+ transform: translateY(-50%);
+}
+
+h1 {
+  font-size:48pt;
+  font-family:'Exo', Geneva, sans-serif;
+  color: #fff;
+  padding: 0 16px 0 16px;
+  background:#000;
+  border-radius:inherit;
 }
