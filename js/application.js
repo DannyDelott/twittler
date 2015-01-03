@@ -3,6 +3,7 @@ $(document).ready(function(){
   /********************
    * Global Variables *
    ********************/  
+   
   var $logo = $('#logo');
   var $logo_link = $logo.find('a');
   
@@ -12,17 +13,14 @@ $(document).ready(function(){
   var $stream_timestamp = $stream_post.children('.timestamp');
   var $stream_message = $stream_post.children('.message');
   var streaming = false;
+  var interval;
 
   var $submit_post = $('#submit');
   var $input = $('.tweet');
+  var $success = $('.success');
   var visitor_tweet = false;
   var visitor_tweet_ready = false;
-  var $success = $('.success');
-
   var $timeline = $('#timeline');
-
-  var index = 0;
-  var interval;
 
   /*************
    * Functions *
@@ -67,11 +65,9 @@ $(document).ready(function(){
    $stream.fadeIn('slow');
    
    interval = setInterval(function show(){
-    console.log("interval: " + ++index);
-    // gets the last tweet in streams.home
-    if(visitor_tweet_ready){
-       var tweet = visitor_tweet;
-    } else {var tweet = streams.home[streams.home.length - 1];}
+
+    if(visitor_tweet_ready) {var tweet = visitor_tweet;} 
+    else {var tweet = streams.home[streams.home.length - 1];}
     
     $stream_post.fadeIn({
   		duration: "slow", 
@@ -117,7 +113,6 @@ $(document).ready(function(){
   
     if(e.which !== 13){return e;}
     if($input.val().length < 1){return e;}
-    
     
     visitor_tweet = {};
     visitor_tweet.user = visitor;
