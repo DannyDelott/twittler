@@ -13,10 +13,10 @@ $(document).ready(function(){
   var $stream_message = $stream_post.children('.message');
   var streaming = false;
 
-  var $submit = $('#submit');
-  var $tweet = $('.tweet');
-  var visitor_tweet;
-  var tweet_text;
+  var $submit_post = $('#submit');
+  var $input = $('.tweet');
+  var visitor_tweet = false;
+  var visitor_tweet_ready = false;
   var $success = $('.success');
 
   var $timeline = $('#timeline');
@@ -70,26 +70,27 @@ $(document).ready(function(){
    interval = setInterval(function show(){
        
     // gets the last tweet in streams.home
-    if(visitor_tweet){
+    if(visitor_tweet_ready){
        var tweet = visitor_tweet;
     } else {var tweet = streams.home[streams.home.length - 1];}
     
     $stream_post.fadeIn({
-  	      duration: "slow", 
-  	      start: function(){
-            if(visitor_tweet){  
-              fillStream(visitor_tweet);
-              visitor_tweet = false;
-            	$success.fadeOut("slow", function(){
-              	$submit.css('padding-bottom','86px');
-              	$tweet.fadeIn("slow");
-              });
-            } else {
-              fillStream(this);
-            }
-          }.bind(tweet)})
-    	   .delay(3000)
-    	   .fadeOut("slow", clearStream);
+  		duration: "slow", 
+  	  start: function(){
+      	if(visitor_tweet_ready){  
+        	fillStream(visitor_tweet);
+          visitor_tweet_ready = false;
+          $success.fadeOut("slow", function(){
+          	$submit_post.css('padding-bottom','86px');
+            $input.fadeIn("slow");
+          });
+        } else {
+       		fillStream(this);
+        }
+      }.bind(tweet)})
+    .delay(3000)
+    .fadeOut("slow", clearStream);
+    
     return show;
     }(), 3000);
   };
@@ -115,20 +116,22 @@ $(document).ready(function(){
   var postTweet = function(e){
   
     if(e.which !== 13){return e;}
-    if($tweet.val().length < 1){return e;}
+    if($input.val().length < 1){return e;}
     
     
     visitor_tweet = {};
     visitor_tweet.user = visitor;
-  	visitor_tweet.message = $tweet.val();
+  	visitor_tweet.message = $input.val();
   	visitor_tweet.created_at = new Date();
-  
-    writeTweet(visitor_tweet.message);
-    $tweet.val('');
 
-    $tweet.fadeOut("slow", function(){
-      $submit.css('padding-bottom', 0);
-      $success.fadeIn("slow");
+    
+    $input.fadeOut("slow", function(){
+      $submit_post.css('padding-bottom', 0);
+      $success.fadeIn("slow", function(){
+      	writeTweet(visitor_tweet.message);
+      	visitor_tweet_ready = true;
+    		$input.val('');
+   	  });
     });
 
     return false;
@@ -141,7 +144,7 @@ $(document).ready(function(){
     
   $logo_link.on('click', function () {if(!streaming) {showStream();}});
   $stream_author.on('click', showTimeline);
-  $tweet.keypress(function(e){ postTweet(e)});
+  $input.keypress(function(e){ postTweet(e)});
 
   /****************
    * Default code *
