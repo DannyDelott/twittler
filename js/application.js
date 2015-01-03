@@ -21,7 +21,7 @@ $(document).ready(function(){
 
   var $timeline = $('#timeline');
 
-  var index = streams.home.length - 1;
+  var index = 0;
   var interval;
 
   /*************
@@ -45,7 +45,7 @@ $(document).ready(function(){
   };
   
   var resetStream = function(){
-    $stream_post.clearQueue(); // stop animations
+    $stream_post.stop(true, false); // stop animations
     clearInterval(interval);  // stops interval
     $timeline.empty();  // deletes timeline posts
     streaming = false;
@@ -63,12 +63,11 @@ $(document).ready(function(){
   
   var showStream = function(){
   
-   resetStream();
    streaming = true;
    $stream.fadeIn('slow');
    
    interval = setInterval(function show(){
-       
+    console.log("interval: " + ++index);
     // gets the last tweet in streams.home
     if(visitor_tweet_ready){
        var tweet = visitor_tweet;
@@ -98,7 +97,8 @@ $(document).ready(function(){
   var showTimeline = function(){
 
     resetStream(); 
-
+    visitor_tweet_ready = false;
+    
     // fades out stream
     $stream.fadeOut("fast", function(){
     
@@ -129,8 +129,8 @@ $(document).ready(function(){
       $submit_post.css('padding-bottom', 0);
       $success.fadeIn("slow", function(){
       	writeTweet(visitor_tweet.message);
-      	visitor_tweet_ready = true;
     		$input.val('');
+    		visitor_tweet_ready = true;
    	  });
     });
 
@@ -142,7 +142,7 @@ $(document).ready(function(){
    * Event Handlers *
    ******************/ 
     
-  $logo_link.on('click', function () {if(!streaming) {showStream();}});
+  $logo_link.on('click', function () {if(!streaming) {resetStream();showStream();}});
   $stream_author.on('click', showTimeline);
   $input.keypress(function(e){ postTweet(e)});
 
