@@ -11,13 +11,18 @@ streams.users.shawndrost = [];
 streams.users.sharksforcheap = [];
 streams.users.mracus = [];
 streams.users.douglascalhoun = [];
+streams.users.visitor = [];
 window.users = Object.keys(streams.users);
+window.visitor = 'visitor';
 
 // utility function for adding tweets to our data structures
 var addTweet = function(newTweet){
   var username = newTweet.user;
   streams.users[username].push(newTweet);
   streams.home.push(newTweet);
+  if(streams.home.length > 10){
+    streams.home.shift();
+  }
 };
 
 // utility function
@@ -65,5 +70,6 @@ var writeTweet = function(message){
   var tweet = {};
   tweet.user = visitor;
   tweet.message = message;
+  tweet.created_at = new Date();
   addTweet(tweet);
 };

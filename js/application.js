@@ -3,7 +3,6 @@ $(document).ready(function(){
   /********************
    * Global Variables *
    ********************/  
-  
   var $logo = $('#logo');
   var $logo_link = $logo.find('a');
   
@@ -13,6 +12,12 @@ $(document).ready(function(){
   var $stream_timestamp = $stream_post.children('.timestamp');
   var $stream_message = $stream_post.children('.message');
   var streaming = false;
+
+  var $submit = $('#submit');
+  var $tweet = $('.tweet');
+  var visitor_tweet;
+  var tweet_text;
+  var $success = $('.success');
 
   var $timeline = $('#timeline');
 
@@ -24,7 +29,7 @@ $(document).ready(function(){
    *************/  
    
   var formatTime = function(time){
-    return moment(time).startOf('hour').fromNow();
+    return moment(time).startOf('minute').fromNow();
   }
   
   var fillStream = function(tweet){
@@ -63,20 +68,30 @@ $(document).ready(function(){
    $stream.fadeIn('slow');
    
    interval = setInterval(function show(){
-    index = streams.home.length - 1;
-    while(index >= 0 && streaming){
-      var tweet = streams.home[index];
-      $stream_post.fadeIn({
-    	      duration: "slow", 
-    	      start: function(){
+       
+    // gets the last tweet in streams.home
+    if(visitor_tweet){
+       var tweet = visitor_tweet;
+    } else {var tweet = streams.home[streams.home.length - 1];}
+    
+    $stream_post.fadeIn({
+  	      duration: "slow", 
+  	      start: function(){
+            if(visitor_tweet){  
+              fillStream(visitor_tweet);
+              visitor_tweet = false;
+            	$success.fadeOut("slow", function(){
+              	$submit.css('padding-bottom','86px');
+              	$tweet.fadeIn("slow");
+              });
+            } else {
               fillStream(this);
-            }.bind(tweet)})
+            }
+          }.bind(tweet)})
     	   .delay(3000)
     	   .fadeOut("slow", clearStream);
-      index-=1;
-    }
     return show;
-    }(), 10000);
+    }(), 3000);
   };
   
   var showTimeline = function(){
@@ -96,6 +111,28 @@ $(document).ready(function(){
      $timeline.fadeIn("slow");
     });
   };
+  
+  var postTweet = function(e){
+  
+    if(e.which !== 13){return e;}
+    if($tweet.val().length < 1){return e;}
+    
+    
+    visitor_tweet = {};
+    visitor_tweet.user = visitor;
+  	visitor_tweet.message = $tweet.val();
+  	visitor_tweet.created_at = new Date();
+  
+    writeTweet(visitor_tweet.message);
+    $tweet.val('');
+
+    $tweet.fadeOut("slow", function(){
+      $submit.css('padding-bottom', 0);
+      $success.fadeIn("slow");
+    });
+
+    return false;
+  };
  
 
   /******************
@@ -104,6 +141,7 @@ $(document).ready(function(){
     
   $logo_link.on('click', function () {if(!streaming) {showStream();}});
   $stream_author.on('click', showTimeline);
+  $tweet.keypress(function(e){ postTweet(e)});
 
   /****************
    * Default code *
